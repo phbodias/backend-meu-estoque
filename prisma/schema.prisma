@@ -24,6 +24,13 @@ model Roles {
   createdAt   DateTime @default(now())
 }
 
+model Permissions {
+  id          String   @id @unique @default(uuid())
+  name        String   @unique
+  description String
+  createdAt   DateTime @default(now())
+}
+
 model Users {
   id        String   @id @unique @default(uuid())
   name      String
