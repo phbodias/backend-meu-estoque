@@ -18,17 +18,30 @@ enum RoleTypes {
 }
 
 model Roles {
-  id          String   @id @unique @default(uuid())
-  name        String   @unique
-  description String
-  createdAt   DateTime @default(now())
+  id              String            @id @unique @default(uuid())
+  name            String            @unique
+  description     String
+  RolePermissions RolePermissions[]
+  createdAt       DateTime          @default(now())
 }
 
 model Permissions {
-  id          String   @id @unique @default(uuid())
-  name        String   @unique
-  description String
-  createdAt   DateTime @default(now())
+  id              String            @id @unique @default(uuid())
+  name            String            @unique
+  description     String
+  RolePermissions RolePermissions[]
+  createdAt       DateTime          @default(now())
+}
+
+model RolePermissions {
+  id           String      @id @unique @default(uuid())
+  Role         Roles       @relation(fields: [roleId], references: [id])
+  roleId       String
+  Permission   Permissions @relation(fields: [permissionId], references: [id])
+  permissionId String
+  createdAt    DateTime    @default(now())
+
+  @@unique([roleId, permissionId])
 }
 
 model Users {
