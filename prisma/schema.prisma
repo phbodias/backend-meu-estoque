@@ -10,18 +10,57 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Role {
-  ONLY_READ
-  SELLER
-  MANAGER
-  OWNER
+enum RoleNames {
+  Owner
+  Admin
+  Seller
+  Reader
+}
+
+enum PermissionName {
+  Read_tables
+  Change_tables
+  Add_tables
+  Delete_tables
+  Add_users
+  Remove_users
+  Edit_userRole
+}
+
+model Roles {
+  id              String            @id @unique @default(uuid())
+  name            RoleNames         @unique
+  description     String
+  RolePermissions RolePermissions[]
+  createdAt       DateTime          @default(now())
+  Users           Users[]
+}
+
+model Permissions {
+  id              String            @id @unique @default(uuid())
+  name            PermissionName    @unique
+  description     String
+  RolePermissions RolePermissions[]
+  createdAt       DateTime          @default(now())
+}
+
+model RolePermissions {
+  id           String      @id @unique @default(uuid())
+  Role         Roles       @relation(fields: [roleId], references: [id])
+  roleId       String
+  Permission   Permissions @relation(fields: [permissionId], references: [id])
+  permissionId String
+  createdAt    DateTime    @default(now())
+
+  @@unique([roleId, permissionId])
 }
 
 model Users {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @unique @default(uuid())
   name      String
   email     String   @unique
   password  String
-  role      Role     @default(ONLY_READ)
+  Role      Roles    @relation(fields: [roleId], references: [id])
+  roleId    String
   createdAt DateTime @default(now())
 }
