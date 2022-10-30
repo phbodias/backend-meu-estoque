@@ -10,16 +10,26 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum RoleTypes {
+enum RoleNames {
   Owner
   Admin
   Seller
   Reader
 }
 
+enum PermissionName {
+  Read_tables
+  Change_tables
+  Add_tables
+  Delete_tables
+  Add_users
+  Remove_users
+  Edit_userRole
+}
+
 model Roles {
   id              String            @id @unique @default(uuid())
-  name            RoleTypes         @unique
+  name            RoleNames         @unique
   description     String
   RolePermissions RolePermissions[]
   createdAt       DateTime          @default(now())
@@ -28,7 +38,7 @@ model Roles {
 
 model Permissions {
   id              String            @id @unique @default(uuid())
-  name            String            @unique
+  name            PermissionName    @unique
   description     String
   RolePermissions RolePermissions[]
   createdAt       DateTime          @default(now())
