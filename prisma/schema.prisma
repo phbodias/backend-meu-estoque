@@ -23,6 +23,7 @@ model Roles {
   description     String
   RolePermissions RolePermissions[]
   createdAt       DateTime          @default(now())
+  Users           Users[]
 }
 
 model Permissions {
@@ -49,5 +50,7 @@ model Users {
   name      String
   email     String   @unique
   password  String
+  Role      Roles    @relation(fields: [roleId], references: [id])
+  roleId    String
   createdAt DateTime @default(now())
 }
