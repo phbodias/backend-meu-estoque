@@ -11,15 +11,15 @@ datasource db {
 }
 
 enum RoleTypes {
-  ONLY_READ
-  SELLER
-  MANAGER
-  OWNER
+  Owner
+  Admin
+  Seller
+  Reader
 }
 
 model Roles {
   id              String            @id @unique @default(uuid())
-  name            String            @unique
+  name            RoleTypes         @unique
   description     String
   RolePermissions RolePermissions[]
   createdAt       DateTime          @default(now())
