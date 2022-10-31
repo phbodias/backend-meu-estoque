@@ -1,11 +1,12 @@
 import { Roles, RoleNames } from "@prisma/client";
 import prisma from "../databases/prisma";
 
-const findByName = async (name: RoleNames): Promise<Roles> => {
-  const role: Roles = await prisma.roles.findFirst({
-    where: { name },
-  });
-  return role;
+const create = async (name: RoleNames): Promise<Roles> => {
+  return await prisma.roles.create({ data: { name } });
 };
 
-export { findByName };
+const findByName = async (name: RoleNames): Promise<Roles> => {
+  return await prisma.roles.findFirst({ where: { name } });
+};
+
+export { create, findByName };
