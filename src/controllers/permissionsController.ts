@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import permissionData from "../types/permissionTypes";
+import permissionData from "../types/permissionType";
 import * as permissionsServices from "../services/permissionsServices";
 import { Permissions } from "@prisma/client";
 
