@@ -1,7 +1,10 @@
 import Joi from "joi";
 
-const rolePermission = Joi.object({
-  role: Joi.string().valid("Owner", "Admin", "Seller", "Reader").valid(),
+const rolePermissionSchema = Joi.object({
+  role: Joi.string()
+    .valid("Owner", "Admin", "Seller", "Reader")
+    .valid()
+    .required(),
   permission: Joi.string()
     .valid(
       "Read_tables",
@@ -14,3 +17,5 @@ const rolePermission = Joi.object({
     )
     .required(),
 });
+
+export default rolePermissionSchema;
