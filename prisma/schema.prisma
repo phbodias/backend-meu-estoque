@@ -30,7 +30,6 @@ enum PermissionName {
 model Roles {
   id              String            @id @unique @default(uuid())
   name            RoleNames         @unique
-  description     String
   RolePermissions RolePermissions[]
   createdAt       DateTime          @default(now())
   Users           Users[]
