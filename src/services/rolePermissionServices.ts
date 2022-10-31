@@ -2,12 +2,13 @@ import * as rolePermissionRepository from "../repositories/rolePermissionsReposi
 import * as rolesRepository from "../repositories/rolesRepository";
 import * as permissionsRepository from "../repositories/permissionsRepository";
 import {
-  rolePermissionData,
-  rolePermissionType,
+  IPermissionsForRole,
+  IRolePermissionData,
+  TRolePermissionType,
 } from "../types/rolePermissionTypes";
-import { Role_permissions } from "@prisma/client";
+import { PermissionName, RoleNames, Role_permissions } from "@prisma/client";
 
-const create = async (data: rolePermissionData): Promise<Role_permissions> => {
+const create = async (data: IRolePermissionData): Promise<Role_permissions> => {
   const role = await rolesRepository.findByName(data.role);
   const permission = await permissionsRepository.findByName(data.permission);
 
@@ -30,9 +31,26 @@ const create = async (data: rolePermissionData): Promise<Role_permissions> => {
 };
 
 const findByIds = async (
-  data: rolePermissionType
+  data: TRolePermissionType
 ): Promise<Role_permissions> => {
   return await rolePermissionRepository.findByIds(data);
 };
 
-export { create };
+const findPermissionsForRole = async (
+  role: RoleNames
+): Promise<IPermissionsForRole> => {
+  const roleExists = await rolesRepository.findByName(role);
+  if (!role) {
+    throw { code: "Not found", message: "Role does not exist." };
+  }
+
+  const roleId: string = roleExists.id;
+  const permissions: PermissionName[] = (
+    await rolePermissionRepository.findPermissionsForRole(roleId)
+  ).map((element) => {
+    return element.Permission.name;
+  });
+  return { role, permissions };
+};
+
+export { create, findPermissionsForRole };

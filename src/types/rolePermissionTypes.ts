@@ -1,10 +1,15 @@
 import { PermissionName, RoleNames, Role_permissions } from "@prisma/client";
 
-interface rolePermissionData {
+interface IRolePermissionData {
   role: RoleNames;
   permission: PermissionName;
 }
 
-type rolePermissionType = Omit<Role_permissions, "id" | "createdAt">;
+interface IPermissionsForRole {
+  role: RoleNames;
+  permissions: PermissionName[];
+}
 
-export { rolePermissionData, rolePermissionType };
+type TRolePermissionType = Omit<Role_permissions, "id" | "createdAt">;
+
+export { IRolePermissionData, TRolePermissionType, IPermissionsForRole };

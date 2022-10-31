@@ -1,10 +1,13 @@
 import { Request, Response } from "express";
-import { rolePermissionData } from "../types/rolePermissionTypes";
+import {
+  IPermissionsForRole,
+  IRolePermissionData,
+} from "../types/rolePermissionTypes";
 import * as rolePermissionServices from "../services/rolePermissionServices";
-import { Role_permissions } from "@prisma/client";
+import { RoleNames, Role_permissions } from "@prisma/client";
 
 const createRolePermission = async (req: Request, res: Response) => {
-  const data: rolePermissionData = req.body;
+  const data: IRolePermissionData = req.body;
   const rolePermission: Role_permissions = await rolePermissionServices.create(
     data
   );
@@ -12,4 +15,11 @@ const createRolePermission = async (req: Request, res: Response) => {
   return res.status(201).send(rolePermission);
 };
 
-export { createRolePermission };
+const findPermissionsForRole = async (req: Request, res: Response) => {
+  const role: RoleNames = req.body.name;
+  const permissions: IPermissionsForRole =
+    await rolePermissionServices.findPermissionsForRole(role);
+  return res.status(200).send(permissions);
+};
+
+export { createRolePermission, findPermissionsForRole };
