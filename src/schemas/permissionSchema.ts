@@ -12,5 +12,7 @@ const permissionSchema = Joi.object({
       "Edit_userRole"
     )
     .required(),
-  description: Joi.string().min(3).max(30).required(),
+  description: Joi.string().min(3).max(500).required(),
 });
+
+export default permissionSchema;
