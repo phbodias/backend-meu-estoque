@@ -7,7 +7,7 @@ const validateSchema = (schema: ObjectSchema) => {
     if (validation.error) {
       throw {
         code: "IncompatibleFormat",
-        message: { Revise: `${validation.error.message}` },
+        message: { Review: `${validation.error.message}` },
       };
     }
 

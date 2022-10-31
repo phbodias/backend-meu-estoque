@@ -1,6 +1,6 @@
 import { PermissionName, Permissions } from "@prisma/client";
 import * as permissionsRepository from "../repositories/permissionsRepository";
-import permissionData from "../types/permissionTypes";
+import permissionData from "../types/permissionType";
 
 const createPermission = async (data: permissionData): Promise<Permissions> => {
   const permissionAlreadyExists = await findByName(data.name);

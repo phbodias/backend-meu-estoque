@@ -1,6 +1,6 @@
 import { PermissionName, Permissions } from "@prisma/client";
 import prisma from "../databases/prisma";
-import permissionData from "../types/permissionTypes";
+import permissionData from "../types/permissionType";
 
 const create = async (data: permissionData): Promise<Permissions> => {
   return await prisma.permissions.create({ data });

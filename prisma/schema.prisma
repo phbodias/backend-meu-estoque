@@ -28,22 +28,22 @@ enum PermissionName {
 }
 
 model Roles {
-  id              String            @id @unique @default(uuid())
-  name            RoleNames         @unique
-  RolePermissions RolePermissions[]
-  createdAt       DateTime          @default(now())
-  Users           Users[]
+  id               String             @id @unique @default(uuid())
+  name             RoleNames          @unique
+  Role_permissions Role_permissions[]
+  createdAt        DateTime           @default(now())
+  Users            Users[]
 }
 
 model Permissions {
-  id              String            @id @unique @default(uuid())
-  name            PermissionName    @unique
-  description     String
-  RolePermissions RolePermissions[]
-  createdAt       DateTime          @default(now())
+  id               String             @id @unique @default(uuid())
+  name             PermissionName     @unique
+  description      String
+  Role_permissions Role_permissions[]
+  createdAt        DateTime           @default(now())
 }
 
-model RolePermissions {
+model Role_permissions {
   id           String      @id @unique @default(uuid())
   Role         Roles       @relation(fields: [roleId], references: [id])
   roleId       String
